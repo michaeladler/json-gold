@@ -258,10 +258,10 @@ func ParseNQuadsFrom(o interface{}) (*RDFDataset, error) {
 		}
 
 		// parse quad
-		if !regexQuad.Match(line) {
+		match := regexQuad.FindStringSubmatch(string(line))
+		if match == nil {
 			return nil, NewJsonLdError(SyntaxError, fmt.Errorf("error while parsing N-Quads; invalid quad. line: %d", lineNumber))
 		}
-		match := regexQuad.FindStringSubmatch(string(line))
 
 		// get subject
 		var subject Node
